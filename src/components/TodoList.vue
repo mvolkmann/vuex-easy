@@ -43,10 +43,6 @@ export default {
   },
   methods: {
     addTodo() {
-      console.log(
-        'TodoList.vue addTodo: this.$store.state =',
-        this.$store.state
-      );
       const todo = createTodo(this.todoText);
       vxe.push('todos', todo);
       vxe.set('todoText', '');
@@ -56,12 +52,6 @@ export default {
     },
     deleteTodo(todoId) {
       vxe.filter('todos', todo => todo.id !== todoId);
-    },
-    logChange(event) {
-      console.log('TodoList.vue logChange: event =', event);
-    },
-    logEnter(event) {
-      console.log('TodoList.vue logEnter: event =', event);
     },
     setTodoText(text) {
       vxe.set('todoText', text);
