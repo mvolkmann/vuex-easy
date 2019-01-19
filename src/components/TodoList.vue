@@ -34,7 +34,7 @@
 <script>
 /* eslint-disable no-console */
 import {mapGetters, mapState} from 'vuex';
-import {vxe} from '../vuex-easy';
+import {vxe} from '../vuex-easy/';
 import Todo from './Todo.vue';
 import {createTodo} from '../util';
 
