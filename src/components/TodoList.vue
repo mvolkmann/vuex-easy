@@ -15,7 +15,7 @@
         autofocus
         placeholder="enter new todo here"
         :value="todoText"
-        @input="updateTodoText($event.target.value)"
+        @input="setTodoText($event.target.value)"
       >
       <button :disabled="!todoText" @click="addTodo">Add</button>
     </form>
@@ -34,6 +34,7 @@
 <script>
 /* eslint-disable no-console */
 import {mapGetters, mapState} from 'vuex';
+import {vxe} from '../vuex-easy';
 import Todo from './Todo.vue';
 import {createTodo} from '../util';
 
@@ -49,21 +50,21 @@ export default {
   },
   methods: {
     addTodo() {
-      const todo = createTodo(this.$store.state.todoText);
-      this.$store.commit('push', {path: 'todos', values: [todo]});
-      this.$store.commit('set', {path: 'todoText', value: ''});
+      const todo = createTodo(this.todoText);
+      vxe.push('todos', todo);
+      vxe.set('todoText', '');
     },
     archiveCompleted() {
-      this.$store.commit('filter', {path: 'todos', fn: t => !t.done});
+      vxe.filter('todos', todo => !todo.done);
     },
     deleteTodo(todoId) {
-      this.$store.commit('filter', {path: 'todos', fn: t => t.id !== todoId});
+      vxe.filter('todos', todo => todo.id !== todoId);
+    },
+    setTodoText(text) {
+      vxe.set('todoText', text);
     },
     toggleDone(index) {
-      this.$store.commit('toggle', `todos.${index}.done`);
-    },
-    updateTodoText(text) {
-      this.$store.commit('set', {path: 'todoText', value: text});
+      vxe.toggle(`todos.${index}.done`);
     }
   }
 };

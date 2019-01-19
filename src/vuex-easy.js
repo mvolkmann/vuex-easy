@@ -8,7 +8,6 @@ Vue.use(Vuex);
 let store;
 
 export function createStore(initialState) {
-  console.log('vuex-easy.js createStore: initialState =', initialState);
   store = new Vuex.Store({
     strict: true,
     state: initialState,
@@ -24,9 +23,6 @@ export function createStore(initialState) {
       },
       increment(state, {path, delta}) {
         update(state, path, n => n + delta);
-      },
-      log(state, label) {
-        console.info('vuex-easy:', label, 'state =', state);
       },
       map(state, {path, fn}) {
         update(state, path, arr => arr.map(fn));
@@ -51,6 +47,39 @@ export function createStore(initialState) {
 
   return store;
 }
+
+export const vxe = {
+  decrement(path, delta = 1) {
+    store.commit('decrement', {path, fn: n => n - delta});
+  },
+  delete(path) {
+    store.commit('delete', path);
+  },
+  filter(path, fn) {
+    store.commit('filter', {path, fn});
+  },
+  increment(path, delta = 1) {
+    store.commit('increment', {path, fn: n => n + delta});
+  },
+  log(label) {
+    console.info('vuex-easy:', label, 'state =', store.state);
+  },
+  map(path, fn) {
+    store.commit('map', {path, fn});
+  },
+  push(path, ...values) {
+    store.commit('push', {path, values});
+  },
+  set(path, value) {
+    store.commit('set', {path, value});
+  },
+  toggle(path) {
+    store.commit('toggle', path);
+  },
+  transform(path, fn) {
+    store.commit('transform', {path, fn});
+  }
+};
 
 //TODO: Is this needed?
 export const getStore = () => store;
