@@ -17,7 +17,10 @@ import {vxe} from './index';
 export default {
   name: 'Input',
   props: {
-    autofocus: Boolean,
+    autofocus: {
+      type: Boolean,
+      default: false
+    },
     onchange: {
       type: Function,
       default: () => {}
