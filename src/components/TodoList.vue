@@ -20,11 +20,11 @@
       <button :disabled="!todoText" @click="addTodo">Add</button>
     </form>
     <ul class="unstyled">
-      <li :key="todo.id" v-for="todo in todos">
+      <li :key="todo.id" v-for="(todo, index) in todos">
         <Todo
           :todo="todo"
           :onDeleteTodo="() => deleteTodo(todo.id)"
-          :onToggleDone="() => toggleDone(todo)"
+          :onToggleDone="() => toggleDone(index)"
         />
       </li>
     </ul>
@@ -59,12 +59,8 @@ export default {
     deleteTodo(todoId) {
       this.$store.commit('filter', {path: 'todos', fn: t => t.id !== todoId});
     },
-    toggleDone(todo) {
-      const {id} = todo;
-      this.$store.commit('map', {
-        path: 'todos',
-        fn: t => (t.id === id ? {...t, done: !t.done} : t)
-      });
+    toggleDone(index) {
+      this.$store.commit('toggle', `todos.${index}.done`);
     },
     updateTodoText(text) {
       this.$store.commit('set', {path: 'todoText', value: text});
