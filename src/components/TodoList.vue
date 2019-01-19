@@ -9,14 +9,7 @@
     </div>
     <br>
     <form @submit.prevent>
-      <!-- <input
-        type="text"
-        size="30"
-        autofocus
-        placeholder="enter new todo here"
-        :value="todoText"
-        @input="setTodoText($event.target.value)"
-      >-->
+      <Input type="checkbox" path="like"/>
       <Input size="30" autofocus placeholder="enter new todo here" path="todoText"/>
       <button :disabled="!todoText" @click="addTodo">Add</button>
     </form>

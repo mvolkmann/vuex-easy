@@ -14,6 +14,7 @@ import {createTodo} from './util';
 import {createStore} from './vuex-easy/';
 
 const initialState = {
+  like: true,
   todoText: '',
   todos: []
 };
