@@ -9,14 +9,15 @@
     </div>
     <br>
     <form @submit.prevent>
-      <input
+      <!-- <input
         type="text"
         size="30"
         autofocus
         placeholder="enter new todo here"
         :value="todoText"
         @input="setTodoText($event.target.value)"
-      >
+      >-->
+      <Input size="30" autofocus placeholder="enter new todo here" path="todoText"/>
       <button :disabled="!todoText" @click="addTodo">Add</button>
     </form>
     <ul class="unstyled">
@@ -34,13 +35,13 @@
 <script>
 /* eslint-disable no-console */
 import {mapGetters, mapState} from 'vuex';
-import {vxe} from '../vuex-easy/';
+import {Input, vxe} from '../vuex-easy/';
 import Todo from './Todo.vue';
 import {createTodo} from '../util';
 
 export default {
   name: 'TodoList',
-  components: {Todo},
+  components: {Input, Todo},
   computed: {
     ...mapGetters(['uncompletedCount']),
     ...mapState({
@@ -50,6 +51,10 @@ export default {
   },
   methods: {
     addTodo() {
+      console.log(
+        'TodoList.vue addTodo: this.$store.state =',
+        this.$store.state
+      );
       const todo = createTodo(this.todoText);
       vxe.push('todos', todo);
       vxe.set('todoText', '');

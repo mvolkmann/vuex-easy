@@ -3,6 +3,12 @@ import {get, omit, set, update} from 'lodash';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+//export {default as Checkboxes} from './checkboxes';
+export {default as Input} from './input';
+//export {default as RadioButtons} from './radio-buttons';
+//export {default as Select} from './select';
+//export {default as TextArea} from './textarea';
+
 Vue.use(Vuex);
 
 let store;
@@ -48,6 +54,8 @@ export function createStore(initialState) {
   return store;
 }
 
+export const getStore = () => store;
+
 export const vxe = {
   decrement(path, delta = 1) {
     store.commit('decrement', {path, fn: n => n - delta});
@@ -57,6 +65,9 @@ export const vxe = {
   },
   filter(path, fn) {
     store.commit('filter', {path, fn});
+  },
+  get(path) {
+    return get(store.state, path);
   },
   increment(path, delta = 1) {
     store.commit('increment', {path, fn: n => n + delta});
@@ -80,6 +91,3 @@ export const vxe = {
     store.commit('transform', {path, fn});
   }
 };
-
-//TODO: Is this needed?
-export const getStore = () => store;
