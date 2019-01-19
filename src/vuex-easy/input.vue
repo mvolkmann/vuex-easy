@@ -1,12 +1,13 @@
 <template>
   <input
-    v-if="useChecked"
+    :autofocus="autofocus"
     :type="type"
     :checked="value"
-    :autofocus="autofocus"
+    :value="value"
     @input="updateValue"
+    @change="onchange"
+    @keyup.enter="onenter"
   >
-  <input v-else :type="type" :value="value" :autofocus="autofocus" @input="updateValue">
 </template>
 
 <script>
@@ -17,8 +18,14 @@ export default {
   name: 'Input',
   props: {
     autofocus: Boolean,
-    onchange: Function,
-    //onenter: Function,
+    onchange: {
+      type: Function,
+      default: () => {}
+    },
+    onenter: {
+      type: Function,
+      default: () => {}
+    },
     path: {
       type: String,
       required: true
@@ -29,9 +36,6 @@ export default {
     }
   },
   computed: {
-    useChecked() {
-      return this.type === 'checkbox' || this.type === 'radiobutton';
-    },
     value() {
       return vxe.get(this.path);
     }
@@ -52,14 +56,5 @@ export default {
       if (onchange) onchange(event);
     }
   }
-  /*
-    if (onEnter) {
-      //TODO: Handle this is a Vue-specific way.
-      inputProps.onKeyPress = event => {
-        if (event.key === 'Enter') onEnter();
-      };
-      delete inputProps.onEnter;
-    }
-  */
 };
 </script>

@@ -9,7 +9,6 @@
     </div>
     <br>
     <form @submit.prevent>
-      <Input type="checkbox" path="like"/>
       <Input size="30" autofocus placeholder="enter new todo here" path="todoText"/>
       <button :disabled="!todoText" @click="addTodo">Add</button>
     </form>
@@ -57,6 +56,12 @@ export default {
     },
     deleteTodo(todoId) {
       vxe.filter('todos', todo => todo.id !== todoId);
+    },
+    logChange(event) {
+      console.log('TodoList.vue logChange: event =', event);
+    },
+    logEnter(event) {
+      console.log('TodoList.vue logEnter: event =', event);
     },
     setTodoText(text) {
       vxe.set('todoText', text);
