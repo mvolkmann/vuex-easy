@@ -10,7 +10,14 @@
 /* eslint-disable no-console */
 //import Test from './components/Test.vue';
 import TodoList from './components/TodoList.vue';
-import store from './store';
+import {createTodo} from './util';
+import {createStore} from './vuex-easy';
+
+const initialState = {
+  todoText: '',
+  todos: []
+};
+const store = createStore(initialState);
 
 export default {
   name: 'app',
@@ -25,6 +32,12 @@ export default {
     changeName() {
       this.name = 'T' + Date.now();
     }
+  },
+  mounted() {
+    this.$store.commit('push', {
+      path: 'todos',
+      values: [createTodo('learn Vue', true), createTodo('build a Vue app')]
+    });
   },
   store
 };

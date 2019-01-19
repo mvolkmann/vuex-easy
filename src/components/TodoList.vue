@@ -33,8 +33,9 @@
 
 <script>
 /* eslint-disable no-console */
-import {mapGetters, mapMutations, mapState} from 'vuex';
+import {mapGetters, mapState} from 'vuex';
 import Todo from './Todo.vue';
+import {createTodo} from '../util';
 
 export default {
   name: 'TodoList',
@@ -47,13 +48,27 @@ export default {
     })
   },
   methods: {
-    ...mapMutations([
-      'addTodo',
-      'archiveCompleted',
-      'deleteTodo',
-      'toggleDone',
-      'updateTodoText'
-    ])
+    addTodo() {
+      const todo = createTodo(this.$store.state.todoText);
+      this.$store.commit('push', {path: 'todos', values: [todo]});
+      this.$store.commit('set', {path: 'todoText', value: ''});
+    },
+    archiveCompleted() {
+      this.$store.commit('filter', {path: 'todos', fn: t => !t.done});
+    },
+    deleteTodo(todoId) {
+      this.$store.commit('filter', {path: 'todos', fn: t => t.id !== todoId});
+    },
+    toggleDone(todo) {
+      const {id} = todo;
+      this.$store.commit('map', {
+        path: 'todos',
+        fn: t => (t.id === id ? {...t, done: !t.done} : t)
+      });
+    },
+    updateTodoText(text) {
+      this.$store.commit('set', {path: 'todoText', value: text});
+    }
   }
 };
 </script>
