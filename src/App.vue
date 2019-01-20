@@ -32,7 +32,7 @@ const initialState = {
 const store = createStore(initialState);
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     TodoList
     //Test
