@@ -5,7 +5,6 @@
     :checked="value"
     :value="value"
     @input="updateValue"
-    @change="onchange"
     @keyup.enter="onenter"
   >
 </template>
@@ -21,10 +20,7 @@ export default {
       type: Boolean,
       default: false
     },
-    onchange: {
-      type: Function,
-      default: () => {}
-    },
+    onchange: Function,
     onenter: {
       type: Function,
       default: () => {}

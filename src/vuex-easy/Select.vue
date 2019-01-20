@@ -11,10 +11,7 @@ import {vxe} from './index';
 export default {
   name: 'Select',
   props: {
-    onchange: {
-      type: Function,
-      default: () => {}
-    },
+    onchange: Function,
     path: {
       type: String,
       required: true

@@ -1,11 +1,5 @@
 <template>
-  <textarea
-    :autofocus="autofocus"
-    :value="value"
-    @input="updateValue"
-    @change="onchange"
-    @keyup.enter="onenter"
-  />
+  <textarea :autofocus="autofocus" :value="value" @input="updateValue" @keyup.enter="onenter"/>
 </template>
 
 <script>
@@ -19,10 +13,7 @@ export default {
       type: Boolean,
       default: false
     },
-    onchange: {
-      type: Function,
-      default: () => {}
-    },
+    onchange: Function,
     onenter: {
       type: Function,
       default: () => {}
