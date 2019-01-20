@@ -16,12 +16,14 @@ import {createStore} from './vuex-easy/';
 const initialState = {
   colors: {
     blue: false,
-    green: false,
+    green: true,
     red: false
   },
-  like: true,
   todoText: '',
-  todos: []
+  todos: [],
+  user: {
+    like: true
+  }
 };
 const store = createStore(initialState);
 

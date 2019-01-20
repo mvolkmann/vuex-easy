@@ -21,12 +21,12 @@
         />
       </li>
     </ul>
+    <Checkboxes class="colors" :list="colorList"/>
     <div>
       <label>
-        <Input type="checkbox" path="like"/>Like
+        <Input type="checkbox" path="user.like"/>Like
       </label>
     </div>
-    <Checkboxes class="colors" :list="colorList"/>
   </div>
 </template>
 

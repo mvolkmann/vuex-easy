@@ -46,8 +46,6 @@ export default {
   },
   methods: {
     updateValue(event) {
-      //TODO: Why is this not called when a checkbox is clicked?
-      console.log('Input.vue updateValue: event =', event);
       const {checked, value} = event.target;
       const {onchange, path, type} = this;
 

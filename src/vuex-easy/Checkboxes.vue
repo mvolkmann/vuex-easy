@@ -1,21 +1,23 @@
 <template>
   <div class="checkboxes">
     <div v-for="(obj, index) in list" :key="getName(index)">
-      <Input
-        type="checkbox"
-        :class="getName(index)"
-        :checked="checked(obj.path)"
-        :id="getName(index)"
-        :key="obj.text"
-        :path="obj.path"
-      />
-      <label for="getName(index)">{{obj.text}}</label>
+      <label for="getName(index)">
+        <Input
+          type="checkbox"
+          :class="getName(index)"
+          :id="getName(index)"
+          :key="obj.text"
+          :path="obj.path"
+        />
+        {{obj.text}}
+      </label>
     </div>
   </div>
 </template>
 
 <script>
-import {Input, vxe} from './index';
+import {vxe} from './index';
+import Input from './Input';
 
 /**
  * This component renders a set of checkboxes.
@@ -26,15 +28,13 @@ import {Input, vxe} from './index';
 export default {
   name: 'Checkboxes',
   props: {
-    /* Will this be added automatically?
-    class: {
-      type: String,
-      default: ''
-    },
-    */
     list: {
       type: Array,
       required: true
+    },
+    dummy: {
+      type: String,
+      value: 'test1'
     }
   },
   components: {Input},
