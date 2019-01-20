@@ -1,13 +1,14 @@
 <template>
-  <div class="checkboxes">
+  <div class="radio-buttons">
     <div v-for="(obj, index) in list" :key="getName(index)">
       <label for="getName(index)">
         <Input
-          type="checkbox"
-          :class="getName(index)"
-          :id="getName(index)"
+          type="radio"
+          :class="obj.value"
           :key="obj.text"
-          :path="obj.path"
+          :name="path"
+          :path="path"
+          :value="obj.value || obj.text"
         />
         {{obj.text}}
       </label>
@@ -30,7 +31,7 @@ const isObject = value => typeof value === 'object';
  * Specify a `className` prop to enable styling the checkboxes.
  */
 export default {
-  name: 'Checkboxes',
+  name: 'RadioButtons',
   props: {
     list: {
       type: Array,
@@ -39,13 +40,14 @@ export default {
         return (
           isArray(value) &&
           value.every(
-            element =>
-              isObject(element) &&
-              isNonEmptyString(element.text) &&
-              isNonEmptyString(element.path)
+            element => isObject(element) && isNonEmptyString(element.text)
           )
         );
       }
+    },
+    path: {
+      type: String,
+      required: true
     }
   },
   components: {Input},

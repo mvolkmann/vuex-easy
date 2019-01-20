@@ -30,19 +30,29 @@
         <option>blue</option>
       </Select>
     </div>
+    <div>
+      <RadioButtons class="flavor" :list="flavorList" path="favorite.flavor"/>
+    </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable no-console */
 import {mapGetters, mapState} from 'vuex';
-import {Checkboxes, Input, Select, TextArea, vxe} from '../vuex-easy/';
+import {
+  Checkboxes,
+  Input,
+  RadioButtons,
+  Select,
+  TextArea,
+  vxe
+} from '../vuex-easy/';
 import Todo from './Todo.vue';
 import {createTodo} from '../util';
 
 export default {
   name: 'TodoList',
-  components: {Checkboxes, Input, Select, TextArea, Todo},
+  components: {Checkboxes, Input, RadioButtons, Select, TextArea, Todo},
   computed: {
     ...mapGetters(['uncompletedCount']),
     ...mapState({
@@ -56,6 +66,11 @@ export default {
         {text: 'Red', path: 'colors.red'},
         {text: 'Green', path: 'colors.green'},
         {text: 'Blue', path: 'colors.blue'}
+      ],
+      flavorList: [
+        {text: 'Chocolate', value: 'choc'},
+        {text: 'Strawberry', value: 'straw'},
+        {text: 'Vanilla', value: 'van'}
       ]
     };
   },

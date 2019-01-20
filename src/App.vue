@@ -19,6 +19,10 @@ const initialState = {
     green: true,
     red: false
   },
+  favorite: {
+    color: 'red',
+    flavor: 'van'
+  },
   todoText: '',
   todos: [],
   user: {
