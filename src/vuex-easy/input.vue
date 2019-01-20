@@ -38,9 +38,9 @@ export default {
   computed: {
     checked() {
       return this.type === 'checkbox'
-        ? this.value
+        ? vxe.get(this.path)
         : this.type === 'radio'
-        ? vxe.get(this.path) === this.value
+        ? this.value === vxe.get(this.path)
         : null;
     },
     getValue() {

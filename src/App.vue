@@ -1,8 +1,6 @@
 <template>
   <div id="app">
     <TodoList/>
-    <!--Test :name="name"/-->
-    <button @click="changeName">Change</button>
   </div>
 </template>
 
