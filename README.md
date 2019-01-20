@@ -1,38 +1,16 @@
-# vuex-todo
+# vuex-easy
 
-This is a Todo app implemented with Vue and Vuex
-to help me learn those.
+This library provides the easiest way possible to manage state in a Vue application.
+It acts as a layer above the VueX library, making it unnecessary to implement any mutations.
+It is based on the React libraries redux-easy and context-easy.
 
-## Project setup
+It does not support actions, because those are never needed anyway.
+Any asynchronous processing, such as calling a REST service,
+can always be done in an event handling method instead of an action.
+If common event handling code is needed across multiple components,
+that can be implemented as a plain function
+that is imported into each of the components
+and invoked from their event handling methods.
 
-```bash
-npm install
-```
-
-### Compiles and hot-reloads for development
-
-```bash
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```bash
-npm run build
-```
-
-### Run your tests
-
-```bash
-npm run test
-```
-
-### Lints and fixes files
-
-```bash
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+To see mutation details, open the Vue devtools, select a mutation, and scroll to "mutation" on the right side.
+The "type" shows the name of the mutation and the "payload" shows the data supplied to it.
