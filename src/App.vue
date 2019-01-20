@@ -14,6 +14,11 @@ import {createTodo} from './util';
 import {createStore} from './vuex-easy/';
 
 const initialState = {
+  colors: {
+    blue: false,
+    green: false,
+    red: false
+  },
   like: true,
   todoText: '',
   todos: []

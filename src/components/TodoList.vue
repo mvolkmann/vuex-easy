@@ -21,25 +21,40 @@
         />
       </li>
     </ul>
+    <div>
+      <label>
+        <Input type="checkbox" path="like"/>Like
+      </label>
+    </div>
+    <Checkboxes class="colors" :list="colorList"/>
   </div>
 </template>
 
 <script>
 /* eslint-disable no-console */
 import {mapGetters, mapState} from 'vuex';
-import {Input, vxe} from '../vuex-easy/';
+import {Checkboxes, Input, vxe} from '../vuex-easy/';
 import Todo from './Todo.vue';
 import {createTodo} from '../util';
 
 export default {
   name: 'TodoList',
-  components: {Input, Todo},
+  components: {Checkboxes, Input, Todo},
   computed: {
     ...mapGetters(['uncompletedCount']),
     ...mapState({
       todos: state => state.todos,
       todoText: state => state.todoText
     })
+  },
+  data() {
+    return {
+      colorList: [
+        {text: 'Red', path: 'colors.red'},
+        {text: 'Green', path: 'colors.green'},
+        {text: 'Blue', path: 'colors.blue'}
+      ]
+    };
   },
   methods: {
     addTodo() {
@@ -67,6 +82,10 @@ export default {
 button:disabled {
   background-color: gray;
   color: white;
+}
+
+.colors {
+  margin: 15px 0;
 }
 
 ul.unstyled {

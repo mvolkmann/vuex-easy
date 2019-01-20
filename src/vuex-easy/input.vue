@@ -1,11 +1,12 @@
 <template>
+  <!--@change="onchange"-->
   <input
     :autofocus="autofocus"
     :type="type"
     :checked="value"
     :value="value"
     @input="updateValue"
-    @change="onchange"
+    @change="updateValue"
     @keyup.enter="onenter"
   >
 </template>
@@ -45,6 +46,8 @@ export default {
   },
   methods: {
     updateValue(event) {
+      //TODO: Why is this not called when a checkbox is clicked?
+      console.log('Input.vue updateValue: event =', event);
       const {checked, value} = event.target;
       const {onchange, path, type} = this;
 

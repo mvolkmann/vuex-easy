@@ -3,8 +3,8 @@ import {get, omit, set, update} from 'lodash';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-//export {default as Checkboxes} from './checkboxes';
-export {default as Input} from './input';
+export {default as Checkboxes} from './Checkboxes';
+export {default as Input} from './Input';
 //export {default as RadioButtons} from './radio-buttons';
 //export {default as Select} from './select';
 //export {default as TextArea} from './textarea';
