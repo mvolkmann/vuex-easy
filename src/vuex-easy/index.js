@@ -22,9 +22,10 @@ export function createStore(initialState, opts = {persist: defaultOptions}) {
   options = opts;
 
   if (!options.validate) {
-    validateArray = noOp;
+    validateArrayPath = noOp;
     validateFunction = noOp;
     validateNumber = noOp;
+    validateNumberPath = noOp;
     validatePath = noOp;
   }
 
@@ -35,7 +36,7 @@ export function createStore(initialState, opts = {persist: defaultOptions}) {
       decrement(state, {path, delta}) {
         validatePath('decrement', path);
         validateNumber('decrement', 'delta', delta);
-        validateNumber('decrement', path, get(state, path));
+        validateNumberPath('decrement', path, get(state, path));
         update(state, path, n => n - delta);
       },
       delete(state, path) {
@@ -44,25 +45,25 @@ export function createStore(initialState, opts = {persist: defaultOptions}) {
       },
       filter(state, {path, fn}) {
         validatePath('filter', path);
-        validateArray('filter', path, get(state, path));
+        validateArrayPath('filter', path, get(state, path));
         validateFunction('filter', fn);
         update(state, path, arr => arr.filter(fn));
       },
       increment(state, {path, delta}) {
         validatePath('increment', path);
         validateNumber('increment', 'delta', delta);
-        validateNumber('increment', path, get(state, path));
+        validateNumberPath('increment', path, get(state, path));
         update(state, path, n => n + delta);
       },
       map(state, {path, fn}) {
         validatePath('map', path);
-        validateArray('map', path, get(state, path));
+        validateArrayPath('map', path, get(state, path));
         validateFunction('map', fn);
         update(state, path, arr => arr.map(fn));
       },
       push(state, {path, values}) {
         validatePath('push', path);
-        validateArray('push', path, get(state, path));
+        validateArrayPath('push', path, get(state, path));
         get(state, path).push(...values);
       },
       set(state, {path, value}) {
@@ -73,12 +74,11 @@ export function createStore(initialState, opts = {persist: defaultOptions}) {
         validatePath('toggle', path);
         if (options.validate) {
           const value = get(state, path);
-          const type = typeof value;
-          if (type !== 'boolean' && type !== 'undefined') {
+          const typ = typeof value;
+          if (typ !== 'boolean' && typ !== 'undefined') {
             throw new Error(
-              MSG_PREFIX +
-                'toggle requires a path to a boolean value, but found' +
-                type
+              `${MSG_PREFIX}toggle requires a path to a boolean value, ` +
+                `but the value at path "${path}" is a ${typ}`
             );
           }
         }
@@ -102,7 +102,7 @@ export const getStore = () => store;
 
 export const vxe = {
   decrement(path, delta = 1) {
-    store.commit('decrement', {path, fn: n => n - delta});
+    store.commit('decrement', {path, delta});
   },
   delete(path) {
     store.commit('delete', path);
@@ -114,7 +114,7 @@ export const vxe = {
     return get(store.state, path);
   },
   increment(path, delta = 1) {
-    store.commit('increment', {path, fn: n => n + delta});
+    store.commit('increment', {path, delta});
   },
   log(label) {
     console.info('vuex-easy:', label, 'state =', store.state);
@@ -136,15 +136,11 @@ export const vxe = {
   }
 };
 
-let validateArray = (methodName, path, value) => {
+let validateArrayPath = (methodName, path, value) => {
   if (Array.isArray(value)) return;
   throw new Error(
-    MSG_PREFIX +
-      methodName +
-      ' requires an array, but ' +
-      path +
-      ' value is ' +
-      value
+    `${MSG_PREFIX}${methodName} requires a path to an array, ` +
+      `but the value at path "${path}" is a ${typeof value}`
   );
 };
 
@@ -155,21 +151,28 @@ let validateFunction = (methodName, value) => {
   );
 };
 
-let validateNumber = (methodName, path, value) => {
-  if (typeof value === 'number') return;
+let validateNumber = (methodName, argName, value) => {
+  const typ = typeof value;
+  if (typ === 'number') return;
   throw new Error(
-    MSG_PREFIX +
-      methodName +
-      ' requires a number, but ' +
-      path +
-      ' value is ' +
-      value
+    `${MSG_PREFIX}${methodName} requires a number for the ` +
+      `"${argName}" argument, but the value passed is a ${typ}`
+  );
+};
+
+let validateNumberPath = (methodName, path, value) => {
+  const typ = typeof value;
+  if (typ === 'number') return;
+  throw new Error(
+    `${MSG_PREFIX}${methodName} requires a path to a number, ` +
+      `but the value at path "${path}" is a ${typ}`
   );
 };
 
 let validatePath = (methodName, path) => {
-  if (typeof path === 'string') return;
+  const typ = typeof path;
+  if (typ === 'string') return;
   throw new Error(
-    MSG_PREFIX + methodName + ' requires a string path, but got ' + path
+    `${MSG_PREFIX}${methodName} requires a string path, but got a ${typ}`
   );
 };
