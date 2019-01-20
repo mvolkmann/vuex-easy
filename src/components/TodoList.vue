@@ -22,19 +22,20 @@
       </li>
     </ul>
     <Checkboxes class="colors" :list="colorList"/>
+    <TextArea path="user.lifeStory"/>
   </div>
 </template>
 
 <script>
 /* eslint-disable no-console */
 import {mapGetters, mapState} from 'vuex';
-import {Checkboxes, Input, vxe} from '../vuex-easy/';
+import {Checkboxes, Input, TextArea, vxe} from '../vuex-easy/';
 import Todo from './Todo.vue';
 import {createTodo} from '../util';
 
 export default {
   name: 'TodoList',
-  components: {Checkboxes, Input, Todo},
+  components: {Checkboxes, Input, TextArea, Todo},
   computed: {
     ...mapGetters(['uncompletedCount']),
     ...mapState({

@@ -7,7 +7,7 @@ export {default as Checkboxes} from './Checkboxes';
 export {default as Input} from './Input';
 //export {default as RadioButtons} from './radio-buttons';
 //export {default as Select} from './select';
-//export {default as TextArea} from './textarea';
+export {default as TextArea} from './TextArea';
 
 Vue.use(Vuex);
 

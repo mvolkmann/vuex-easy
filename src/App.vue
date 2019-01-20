@@ -20,7 +20,10 @@ const initialState = {
     red: false
   },
   todoText: '',
-  todos: []
+  todos: [],
+  user: {
+    lifeStory: ''
+  }
 };
 const store = createStore(initialState);
 
