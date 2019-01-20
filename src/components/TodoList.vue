@@ -23,19 +23,26 @@
     </ul>
     <Checkboxes class="colors" :list="colorList"/>
     <TextArea path="user.lifeStory"/>
+    <div>
+      <Select path="favorite.color">
+        <option>red</option>
+        <option>green</option>
+        <option>blue</option>
+      </Select>
+    </div>
   </div>
 </template>
 
 <script>
 /* eslint-disable no-console */
 import {mapGetters, mapState} from 'vuex';
-import {Checkboxes, Input, TextArea, vxe} from '../vuex-easy/';
+import {Checkboxes, Input, Select, TextArea, vxe} from '../vuex-easy/';
 import Todo from './Todo.vue';
 import {createTodo} from '../util';
 
 export default {
   name: 'TodoList',
-  components: {Checkboxes, Input, TextArea, Todo},
+  components: {Checkboxes, Input, Select, TextArea, Todo},
   computed: {
     ...mapGetters(['uncompletedCount']),
     ...mapState({
