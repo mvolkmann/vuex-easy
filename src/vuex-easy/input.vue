@@ -1,12 +1,11 @@
 <template>
-  <!--@change="onchange"-->
   <input
     :autofocus="autofocus"
     :type="type"
     :checked="value"
     :value="value"
     @input="updateValue"
-    @change="updateValue"
+    @change="onchange"
     @keyup.enter="onenter"
   >
 </template>

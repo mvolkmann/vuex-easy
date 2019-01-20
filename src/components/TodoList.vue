@@ -22,11 +22,6 @@
       </li>
     </ul>
     <Checkboxes class="colors" :list="colorList"/>
-    <div>
-      <label>
-        <Input type="checkbox" path="user.like"/>Like
-      </label>
-    </div>
   </div>
 </template>
 
