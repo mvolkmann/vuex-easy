@@ -15,10 +15,19 @@ Vue.use(Vuex);
 
 let options, store;
 
+const noOp = () => {};
 const defaultOptions = {persist: true};
 
 export function createStore(initialState, opts = {persist: defaultOptions}) {
   options = opts;
+
+  if (!options.validate) {
+    validateArray = noOp;
+    validateFunction = noOp;
+    validateNumber = noOp;
+    validatePath = noOp;
+  }
+
   store = new Vuex.Store({
     strict: true,
     state: initialState,

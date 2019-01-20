@@ -8,7 +8,7 @@
 /* eslint-disable no-console */
 import TodoList from './components/TodoList.vue';
 import {createTodo} from './util';
-import {createStore} from './vuex-easy/';
+import {createStore, vxe} from './vuex-easy/';
 
 const initialState = {
   colors: {
@@ -26,14 +26,11 @@ const initialState = {
     lifeStory: ''
   }
 };
-const store = createStore(initialState);
+const store = createStore(initialState, {validate: true});
 
 export default {
   name: 'App',
-  components: {
-    TodoList
-    //Test
-  },
+  components: {TodoList},
   data: () => {
     return {name: 'start'};
   },
@@ -42,11 +39,12 @@ export default {
       this.name = 'T' + Date.now();
     }
   },
-  mounted() {
-    this.$store.commit('push', {
-      path: 'todos',
-      values: [createTodo('learn Vue', true), createTodo('build a Vue app')]
-    });
+  beforeCreate() {
+    vxe.push(
+      'todos',
+      createTodo('learn Vue', true),
+      createTodo('build a Vue app')
+    );
   },
   store
 };
