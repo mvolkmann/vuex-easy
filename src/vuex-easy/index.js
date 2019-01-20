@@ -25,8 +25,8 @@ export function createStore(initialState, opts = {persist: defaultOptions}) {
     validateArrayPath = noOp;
     validateFunction = noOp;
     validateNumber = noOp;
-    validateNumberPath = noOp;
     validatePath = noOp;
+    validatePathType = noOp;
   }
 
   store = new Vuex.Store({
@@ -36,7 +36,7 @@ export function createStore(initialState, opts = {persist: defaultOptions}) {
       decrement(state, {path, delta}) {
         validatePath('decrement', path);
         validateNumber('decrement', 'delta', delta);
-        validateNumberPath('decrement', path, get(state, path));
+        validatePathType('decrement', path, 'number', get(state, path));
         update(state, path, n => n - delta);
       },
       delete(state, path) {
@@ -52,7 +52,7 @@ export function createStore(initialState, opts = {persist: defaultOptions}) {
       increment(state, {path, delta}) {
         validatePath('increment', path);
         validateNumber('increment', 'delta', delta);
-        validateNumberPath('increment', path, get(state, path));
+        validatePathType('increment', path, 'number', get(state, path));
         update(state, path, n => n + delta);
       },
       map(state, {path, fn}) {
@@ -72,6 +72,7 @@ export function createStore(initialState, opts = {persist: defaultOptions}) {
       },
       toggle(state, path) {
         validatePath('toggle', path);
+        validatePathType('toggle', path, 'boolean', get(state, path));
         if (options.validate) {
           const value = get(state, path);
           const typ = typeof value;
@@ -160,19 +161,19 @@ let validateNumber = (methodName, argName, value) => {
   );
 };
 
-let validateNumberPath = (methodName, path, value) => {
-  const typ = typeof value;
-  if (typ === 'number') return;
-  throw new Error(
-    `${MSG_PREFIX}${methodName} requires a path to a number, ` +
-      `but the value at path "${path}" is a ${typ}`
-  );
-};
-
 let validatePath = (methodName, path) => {
   const typ = typeof path;
   if (typ === 'string') return;
   throw new Error(
     `${MSG_PREFIX}${methodName} requires a string path, but got a ${typ}`
+  );
+};
+
+let validatePathType = (methodName, path, expectedType) => {
+  const typ = typeof value;
+  if (typ === expectedType) return;
+  throw new Error(
+    `${MSG_PREFIX}${methodName} requires a path to a ${expectedType}, ` +
+      `but the value at path "${path}" is a ${typ}`
   );
 };
