@@ -8,7 +8,6 @@
 
 <script>
 /* eslint-disable no-console */
-//import Test from './components/Test.vue';
 import TodoList from './components/TodoList.vue';
 import {createTodo} from './util';
 import {createStore} from './vuex-easy/';

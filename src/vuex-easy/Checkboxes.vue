@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import {vxe} from './index';
 import Input from './Input';
 
 const isArray = value => Array.isArray(value);
@@ -50,9 +49,6 @@ export default {
   },
   components: {Input},
   methods: {
-    checked(path) {
-      return Boolean(vxe.get(path));
-    },
     getName(index) {
       return 'cb' + index;
     }

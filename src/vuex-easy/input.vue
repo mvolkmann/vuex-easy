@@ -1,9 +1,9 @@
 <template>
   <input
     :autofocus="autofocus"
+    :checked="checked"
     :type="type"
-    :checked="value"
-    :value="value"
+    :value="getValue"
     @input="updateValue"
     @keyup.enter="onenter"
   >
@@ -32,11 +32,19 @@ export default {
     type: {
       type: String,
       default: 'text'
-    }
+    },
+    value: String
   },
   computed: {
-    value() {
-      return vxe.get(this.path);
+    checked() {
+      return this.type === 'checkbox'
+        ? this.value
+        : this.type === 'radio'
+        ? vxe.get(this.path) === this.value
+        : null;
+    },
+    getValue() {
+      return this.value || vxe.get(this.path);
     }
   },
   methods: {

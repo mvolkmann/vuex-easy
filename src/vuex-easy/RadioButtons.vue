@@ -1,7 +1,7 @@
 <template>
   <div class="radio-buttons">
-    <div v-for="(obj, index) in list" :key="getName(index)">
-      <label for="getName(index)">
+    <div v-for="obj in list" :key="obj.value">
+      <label :for="path">
         <Input
           type="radio"
           :class="obj.value"
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {vxe} from './index';
+/* eslint-disable no-console */
 import Input from './Input';
 
 const isArray = value => Array.isArray(value);
@@ -32,6 +32,7 @@ const isObject = value => typeof value === 'object';
  */
 export default {
   name: 'RadioButtons',
+  components: {Input},
   props: {
     list: {
       type: Array,
@@ -48,15 +49,6 @@ export default {
     path: {
       type: String,
       required: true
-    }
-  },
-  components: {Input},
-  methods: {
-    checked(path) {
-      return Boolean(vxe.get(path));
-    },
-    getName(index) {
-      return 'cb' + index;
     }
   }
 };
