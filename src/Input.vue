@@ -40,8 +40,8 @@ export default {
       return this.type === 'checkbox'
         ? vxe.get(this.path)
         : this.type === 'radio'
-        ? this.value === vxe.get(this.path)
-        : null;
+          ? this.value === vxe.get(this.path)
+          : null;
     },
     getValue() {
       return this.value || vxe.get(this.path);

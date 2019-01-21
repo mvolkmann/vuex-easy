@@ -46,7 +46,7 @@ export function createStore(initState, opts = {}) {
       },
       delete(state, path) {
         if (validate) validatePath('delete', path);
-        state = omit(state, path);
+        store.replaceState(omit(state, path));
         if (persist) throttledSave();
       },
       filter(state, {path, fn}) {
@@ -115,9 +115,6 @@ export function createStore(initState, opts = {}) {
         update(state, path, fn);
         if (persist) throttledSave();
       }
-    },
-    getters: {
-      uncompletedCount: state => state.todos.filter(t => !t.done).length
     }
   });
 

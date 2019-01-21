@@ -59,7 +59,7 @@ To use vuex-easy:
 import {createStore} from 'vuex-easy';
 ```
 
-2. Define the initial state. For example:
+1. Define the initial state. For example:
 
 ```js
 const initialState = {
@@ -72,13 +72,13 @@ const initialState = {
 };
 ```
 
-3. Create the store.
+1. Create the store.
 
 ```js
 const store = createStore(initialState);
 ```
 
-4. Register the store.
+1. Register the store.
 
 ```js
 export default {
@@ -97,11 +97,11 @@ In components that need to access and/or modify this state:
 import {vxe} from 'vuex-easy';
 ```
 
-3. Access state from the Vuex store using `mapState`.
+1. Access state from the Vuex store using `mapState`.
 
 This part is the same as standard usage of Vuex.
 
-4. Update state properties at specific paths
+1. Update state properties at specific paths
    by calling methods on the `vxe` object.\
    Paths are dot-separated strings.\
    For example, to change the state property at `person.name`,
