@@ -5,10 +5,9 @@ This library provides the easiest way possible to manage state in a Vue applicat
 ## Highlights
 
 - acts as a layer above the VueX library,
-  so the Vue devtools Vuex tab can still be used to view the state
-  and perform "Time Travel" debugging
+  so the Vue devtools Vuex tab can still be used
 - makes it unnecessary to implement any mutations
-- is based on the React libraries
+- based on the battle-tested React libraries
   [redux-easy](https://github.com/mvolkmann/redux-easy) and
   [context-easy](https://github.com/mvolkmann/context-easy)
 
@@ -28,11 +27,13 @@ The same level of access is provided by vuex-easy.
 ## Vue Devtools Support
 
 Because vuex-easy uses Vuex, the Vue devtools
-can be used to see mutation details.
+can be used to see mutation details
+and perform "Time Travel" debugging.
+
 To view a mutation, open the Vue devtools, select a
 mutation, and scroll to "mutation" on the right side.
-The "type" shows the name of the mutation and
-the "payload" shows the data supplied to it.
+The "type" property shows the name of the mutation and
+the "payload" property shows the data supplied to it.
 
 ## Actions
 
@@ -41,7 +42,7 @@ because those are never needed.
 Any asynchronous processing, such as calling a REST service,
 can be done in an event handling method instead of an action.
 When the asynchronous part completes,
-a synchronous VueX commit can be performed.
+a synchronous VueX commit can be performed (by calling methods on the `vxe` object).
 
 If common event handling code is needed across multiple components,
 it can be implemented as a plain function
@@ -102,12 +103,13 @@ This part is the same as standard usage of Vuex.
 
 4. Update state properties at specific paths
    by calling methods on the `vxe` object.\
+   Paths are dot-separated strings.\
    For example, to change the state property at `person.name`,
-   call `vxe.set('person.name', 'Mark')`.
+   call `vxe.set('person.name', 'Tami')`.
 
 ## vxe Methods
 
-The vxe object currently implements ten methods.
+The `vxe` object currently implements ten methods.
 
 - `vxe.decrement(path)`\
   This decrements the number at the given path.

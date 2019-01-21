@@ -19,20 +19,21 @@ let initialState, options, store;
 
 const identityFn = state => state;
 
+function copyWithoutFunctions(obj) {
+  return Object.keys(obj).reduce((acc, key) => {
+    const value = obj[key];
+    if (typeof value !== 'function') acc[key] = value;
+    return acc;
+  }, {});
+}
+
 export function createStore(initState, opts = {}) {
   initialState = initState;
   options = opts;
-  console.log('index.js createStore: options =', options);
   const {persist = true, replacerFn = identityFn, validate} = options;
-  console.log('index.js createStore: replacerFn =', replacerFn);
 
   const throttledSave = throttle(() => {
-    console.log(
-      'index.js throttleSave: store.state.todoText =',
-      store.state.todoText
-    );
     const json = JSON.stringify(replacerFn(store.state));
-    console.log('index.js throttledSave: json =', json);
     sessionStorage.setItem(STATE_KEY, json);
   }, 1000);
 
@@ -189,7 +190,12 @@ export const vxe = {
     store.commit('increment', {path, delta});
   },
   log(label) {
-    console.info('vuex-easy:', label, 'state =', store.state);
+    console.info(
+      'vuex-easy:',
+      label,
+      'state =',
+      copyWithoutFunctions(store.state)
+    );
   },
   map(path, fn) {
     store.commit('map', {path, fn});
