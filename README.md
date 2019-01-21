@@ -351,4 +351,4 @@ Consider using the lodash function `deepClone` to create the copy.
 ## Example app
 
 The GitHub repository at <https://github.com/mvolkmann/vuex-easy-demo>
-will provide an example application that uses vuex-easy soon!
+provides an example application that uses vuex-easy.
