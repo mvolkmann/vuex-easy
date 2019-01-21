@@ -2,35 +2,53 @@
 
 This library provides the easiest way possible to manage state in a Vue application.
 
-vuex-easy
+## Highlights
 
 - acts as a layer above the VueX library,
   so the Vue devtools Vuex tab can still be used to view the state
   and perform "Time Travel" debugging
 - makes it unnecessary to implement any mutations
-- is based on the React libraries redux-easy and context-easy
+- is based on the React libraries
+  [redux-easy](https://github.com/mvolkmann/redux-easy) and
+  [context-easy](https://github.com/mvolkmann/context-easy)
 
-vuex-easy does not support actions, because those are never needed.
+## Re-rendering
+
+Just like in standard usage of VueX,
+all components automatically re-render
+if any state they use changes.
+
+## Single Store
+
+Using a single store is similar to how REST services
+generally have access to entire databases
+rather than being restricted to subsets.
+The same level of access is provided by vuex-easy.
+
+## Vue Devtools Support
+
+Because vuex-easy uses Vuex, the Vue devtools
+can be used to see mutation details.
+To view a mutation, open the Vue devtools, select a
+mutation, and scroll to "mutation" on the right side.
+The "type" shows the name of the mutation and
+the "payload" shows the data supplied to it.
+
+## Actions
+
+Actions are not supported by vuex-easy
+because those are never needed.
 Any asynchronous processing, such as calling a REST service,
 can be done in an event handling method instead of an action.
-When the asynchronous part completes, a synchronous VueX commit can be performed.
+When the asynchronous part completes,
+a synchronous VueX commit can be performed.
+
 If common event handling code is needed across multiple components,
-that can be implemented as a plain function
+it can be implemented as a plain function
 that is imported into each of the components
 and invoked from their event handling methods.
 
-To see mutation details, open the Vue devtools, select a mutation,
-and scroll to "mutation" on the right side.
-The "type" shows the name of the mutation
-and the "payload" shows the data supplied to it.
-
-This is similar to how REST services generally
-have access to entire databases
-rather than being restricted to subsets.
-The same level of access can be provided
-using the Context API.
-The Provider implemented by context-easy
-does exactly this.
+## Usage
 
 To use vuex-easy:
 
@@ -139,12 +157,6 @@ The vxe object currently implements ten methods.
   This sets the value at the given path to
   the value returned by passing the current value
   to the function provided as the second argument.
-
-## Re-rendering
-
-Just like in standard usage of VueX,
-components will automatically re-render
-if any state they use changes.
 
 ## Options
 
@@ -339,4 +351,4 @@ Consider using the lodash function `deepClone` to create the copy.
 ## Example app
 
 The GitHub repository at <https://github.com/mvolkmann/vuex-easy-demo>
-provides an example application that uses vuex-easy.
+will provide an example application that uses vuex-easy soon!
