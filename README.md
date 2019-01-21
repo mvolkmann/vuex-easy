@@ -134,7 +134,7 @@ The `vxe` object currently implements ten methods.
 
 - `vxe.log(label)`\
   This writes the current state to the devtools console.
-  It outputs "context-easy:", followed by
+  It outputs "vuex-easy:", followed by
   an optional label that defaults to an empty string,
   "state =", and the state object.
 
@@ -145,9 +145,7 @@ The `vxe` object currently implements ten methods.
   The new array will contain the return values of each of these calls.
 
 - `vxe.push(path, newValue1, newValue2, ...)`\
-  This replaces the array at the given path with a new array.
-  The new array starts with all the existing elements
-  and ends with all the specified new values.
+  This appends new values to the end of the array at the given path.
 
 - `vxe.set(path, value)`\
   This sets the value at the given path to the given value.
@@ -165,8 +163,8 @@ The `vxe` object currently implements ten methods.
 The `createStore` function accepts an optional second argument
 that is an object that specifies options.
 
-To validate all method calls made on the context object
-and throw an error when they are called incorrectly,
+To validate all method calls made on the context object and
+throw an error when they are called with incorrect arguments,
 set the `validate` option to `true`.
 
 The `persist` option

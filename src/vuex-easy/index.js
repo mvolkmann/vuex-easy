@@ -189,7 +189,7 @@ export const vxe = {
   increment(path, delta = 1) {
     store.commit('increment', {path, delta});
   },
-  log(label) {
+  log(label = '') {
     console.info(
       'vuex-easy:',
       label,
