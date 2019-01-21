@@ -11,7 +11,7 @@
 
 <script>
 /* eslint-disable no-console */
-import {vxe} from './index';
+import {vxe} from './vuex-easy';
 
 export default {
   name: 'Input',
