@@ -8,7 +8,7 @@
 /* eslint-disable no-console */
 import TodoList from './components/TodoList.vue';
 import {createTodo} from './util';
-import {createStore, vxe} from './vuex-easy/';
+import {createStore, loadState, vxe} from './vuex-easy/';
 
 const initialState = {
   colors: {
@@ -40,11 +40,15 @@ export default {
     }
   },
   beforeCreate() {
-    vxe.push(
-      'todos',
-      createTodo('learn Vue', true),
-      createTodo('build a Vue app')
-    );
+    loadState();
+    const todos = vxe.get('todos');
+    if (todos.length === 0) {
+      vxe.push(
+        'todos',
+        createTodo('learn Vue', true),
+        createTodo('build a Vue app')
+      );
+    }
   },
   store
 };

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import {get, omit, set, update} from 'lodash';
+import {get, omit, set, throttle, update} from 'lodash';
 import Vue from 'vue';
 import Vuex from 'vuex';
 
@@ -10,69 +10,95 @@ export {default as Select} from './Select';
 export {default as TextArea} from './TextArea';
 
 const MSG_PREFIX = 'vuex-easy method ';
+const STATE_KEY = 'vuex-easy-state';
+const VERSION_KEY = '@vuexEasyVersion';
 
 Vue.use(Vuex);
 
-let options, store;
+let initialState, options, store;
 
-const noOp = () => {};
-const defaultOptions = {persist: true};
+const identityFn = state => state;
 
-export function createStore(initialState, opts = {persist: defaultOptions}) {
+export function createStore(initState, opts = {}) {
+  initialState = initState;
   options = opts;
+  console.log('index.js createStore: options =', options);
+  const {persist = true, replacerFn = identityFn, validate} = options;
+  console.log('index.js createStore: replacerFn =', replacerFn);
 
-  if (!options.validate) {
-    validateArrayPath = noOp;
-    validateFunction = noOp;
-    validateNumber = noOp;
-    validatePath = noOp;
-    validatePathType = noOp;
-  }
+  const throttledSave = throttle(() => {
+    console.log(
+      'index.js throttleSave: store.state.todoText =',
+      store.state.todoText
+    );
+    const json = JSON.stringify(replacerFn(store.state));
+    console.log('index.js throttledSave: json =', json);
+    sessionStorage.setItem(STATE_KEY, json);
+  }, 1000);
 
   store = new Vuex.Store({
     strict: true,
     state: initialState,
     mutations: {
       decrement(state, {path, delta}) {
-        validatePath('decrement', path);
-        validateNumber('decrement', 'delta', delta);
-        validatePathType('decrement', path, 'number', get(state, path));
+        if (validate) {
+          validatePath('decrement', path);
+          validateNumber('decrement', 'delta', delta);
+          validatePathType('decrement', path, 'number', get(state, path));
+        }
         update(state, path, n => n - delta);
+        if (persist) throttledSave();
       },
       delete(state, path) {
-        validatePath('delete', path);
+        if (validate) validatePath('delete', path);
         state = omit(state, path);
+        if (persist) throttledSave();
       },
       filter(state, {path, fn}) {
-        validatePath('filter', path);
-        validateArrayPath('filter', path, get(state, path));
-        validateFunction('filter', fn);
+        if (validate) {
+          validatePath('filter', path);
+          validateArrayPath('filter', path, get(state, path));
+          validateFunction('filter', fn);
+        }
         update(state, path, arr => arr.filter(fn));
+        if (persist) throttledSave();
       },
       increment(state, {path, delta}) {
-        validatePath('increment', path);
-        validateNumber('increment', 'delta', delta);
-        validatePathType('increment', path, 'number', get(state, path));
+        if (validate) {
+          validatePath('increment', path);
+          validateNumber('increment', 'delta', delta);
+          validatePathType('increment', path, 'number', get(state, path));
+        }
         update(state, path, n => n + delta);
+        if (persist) throttledSave();
       },
       map(state, {path, fn}) {
-        validatePath('map', path);
-        validateArrayPath('map', path, get(state, path));
-        validateFunction('map', fn);
+        if (validate) {
+          validatePath('map', path);
+          validateArrayPath('map', path, get(state, path));
+          validateFunction('map', fn);
+        }
         update(state, path, arr => arr.map(fn));
+        if (persist) throttledSave();
       },
       push(state, {path, values}) {
-        validatePath('push', path);
-        validateArrayPath('push', path, get(state, path));
+        if (validate) {
+          validatePath('push', path);
+          validateArrayPath('push', path, get(state, path));
+        }
         get(state, path).push(...values);
+        if (persist) throttledSave();
       },
       set(state, {path, value}) {
-        validatePath('set', path);
+        if (validate) validatePath('set', path);
         set(state, path, value);
+        if (persist) throttledSave();
       },
       toggle(state, path) {
-        validatePath('toggle', path);
-        validatePathType('toggle', path, 'boolean', get(state, path));
+        if (validate) {
+          validatePath('toggle', path);
+          validatePathType('toggle', path, 'boolean', get(state, path));
+        }
         if (options.validate) {
           const value = get(state, path);
           const typ = typeof value;
@@ -84,11 +110,15 @@ export function createStore(initialState, opts = {persist: defaultOptions}) {
           }
         }
         set(state, path, !get(state, path));
+        if (persist) throttledSave();
       },
       transform(state, {path, fn}) {
-        validatePath('transform', path);
-        validateFunction('transform', fn);
+        if (validate) {
+          validatePath('transform', path);
+          validateFunction('transform', fn);
+        }
         update(state, path, fn);
+        if (persist) throttledSave();
       }
     },
     getters: {
@@ -100,6 +130,47 @@ export function createStore(initialState, opts = {persist: defaultOptions}) {
 }
 
 export const getStore = () => store;
+
+export function loadState() {
+  const {
+    persist = true,
+    replacerFn = identityFn,
+    reviverFn = identityFn,
+    version
+  } = options;
+
+  const {sessionStorage} = window; // not available in tests
+
+  const cleanState = replacerFn(initialState);
+
+  if (!persist || !sessionStorage) {
+    store.replaceState(cleanState);
+    return;
+  }
+
+  // If the version passed to createStore does not match the version
+  // last saved in sessionStorage, assume that the shape of the state
+  // may have changed and revert to initialState.
+  const ssVersion = sessionStorage.getItem(VERSION_KEY);
+  if (String(version) !== ssVersion) {
+    sessionStorage.setItem(STATE_KEY, JSON.stringify(cleanState));
+    sessionStorage.setItem(VERSION_KEY, version);
+    store.replaceState(cleanState);
+    return;
+  }
+
+  const json = sessionStorage.getItem(STATE_KEY);
+  if (!json) return cleanState;
+
+  try {
+    const state = JSON.parse(json);
+    const revived = reviverFn(state);
+    store.replaceState(revived);
+  } catch (e) {
+    console.error('invalid json in sessionStorage:', e);
+    store.replaceState(cleanState);
+  }
+}
 
 export const vxe = {
   decrement(path, delta = 1) {
@@ -169,7 +240,7 @@ let validatePath = (methodName, path) => {
   );
 };
 
-let validatePathType = (methodName, path, expectedType) => {
+let validatePathType = (methodName, path, expectedType, value) => {
   const typ = typeof value;
   if (typ === expectedType) return;
   throw new Error(
