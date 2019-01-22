@@ -10,7 +10,6 @@
 </template>
 
 <script>
-/* eslint-disable no-console */
 import {vxe} from './vuex-easy';
 
 export default {

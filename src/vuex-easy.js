@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import {get, omit, set, throttle, update} from 'lodash';
 import Vue from 'vue';
 import Vuex from 'vuex';

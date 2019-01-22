@@ -17,7 +17,6 @@
 </template>
 
 <script>
-/* eslint-disable no-console */
 import Input from './Input';
 
 const isArray = value => Array.isArray(value);
