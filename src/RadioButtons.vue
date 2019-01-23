@@ -1,10 +1,10 @@
 <template>
   <div class="radio-buttons">
-    <div v-for="obj in list" :key="obj.value">
+    <div v-for="(obj, index) in list" :key="obj.value">
       <label :for="path">
         <Input
           type="radio"
-          :class="obj.value"
+          :class="getClass(index)"
           :key="obj.text"
           :name="path"
           :path="path"
@@ -48,6 +48,11 @@ export default {
     path: {
       type: String,
       required: true
+    }
+  },
+  methods: {
+    getClass(index) {
+      return 'rb' + index;
     }
   }
 };

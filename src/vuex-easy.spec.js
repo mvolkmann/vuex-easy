@@ -55,8 +55,17 @@ describe('vuex-easy', () => {
   });
 
   it('can use log method', () => {
+    // Suppress console output for tests.
+    global.console = {
+      info: jest.fn(),
+      log: jest.fn()
+    };
+
     // Just testing that this doesn't result in an error for now.
     vxe.log('some label');
+
+    //TODO: Why doesn't this pass?
+    //expect(global.console.log).toHaveBeenCalled();
   });
 
   it('can use map method', () => {

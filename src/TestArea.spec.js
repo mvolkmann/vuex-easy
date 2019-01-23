@@ -1,14 +1,14 @@
 import {createStore, vxe} from '@/vuex-easy';
 import {mount} from '@vue/test-utils';
-import Input from '@/Input';
+import TextArea from '@/TextArea';
 
-describe('Input', () => {
+describe('TextArea', () => {
   const path = 'user.name';
   let wrapper;
 
   beforeAll(() => {
     createStore({user: {name: ''}});
-    wrapper = mount(Input, {
+    wrapper = mount(TextArea, {
       attachToDocument: true,
       propsData: {autofocus: true, path}
     });
@@ -22,8 +22,8 @@ describe('Input', () => {
   });
 
   test('can use autofocus', () => {
-    const input = wrapper.find('input');
-    expect(input.props('autofocus')).toBeDefined();
+    const textarea = wrapper.find('textarea');
+    expect(textarea.props('autofocus')).toBeDefined();
     //expect(input.element).toBe(document.activeElement);
   });
 });
