@@ -304,6 +304,16 @@ not updated more frequently than once per second.
 The state in `sessionStorage` is automatically reloaded
 into the context state when the browser is refreshed.
 
+To enable refreshing state from `sessionStorage`,
+import the `loadState` function from `vuex-easy` and
+call it from the `beforeCreate` method of the top component.
+
+```js
+  beforeCreate() {
+    loadState();
+  }
+```
+
 To opt out of this behavior, pass an options object to
 the `createStore` function as follows:
 
