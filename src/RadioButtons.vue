@@ -7,6 +7,7 @@
           :class="getClass(index)"
           :key="obj.text"
           :name="path"
+          :onchange="onchange"
           :path="path"
           :value="obj.value || obj.text"
         />
@@ -45,6 +46,7 @@ export default {
         );
       }
     },
+    onchange: Function,
     path: {
       type: String,
       required: true

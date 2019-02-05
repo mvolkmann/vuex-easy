@@ -7,6 +7,7 @@
           :class="getName(index)"
           :id="getName(index)"
           :key="obj.text"
+          :onchange="onchange"
           :path="obj.path"
         />
         {{obj.text}}
@@ -45,7 +46,8 @@ export default {
           )
         );
       }
-    }
+    },
+    onchange: Function
   },
   components: {Input},
   methods: {
