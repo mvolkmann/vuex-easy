@@ -1,5 +1,10 @@
 <template>
-  <textarea :autofocus="autofocus" :value="value" @input="updateValue" @keyup.enter="onenter"/>
+  <textarea
+    :autofocus="autofocus"
+    :value="value"
+    @input="updateValue"
+    @keyup.enter="onenter"
+  />
 </template>
 
 <script>

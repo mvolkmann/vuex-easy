@@ -11,7 +11,7 @@
           :path="path"
           :value="obj.value || obj.text"
         />
-        {{obj.text}}
+        {{ obj.text }}
       </label>
     </div>
   </div>

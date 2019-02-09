@@ -10,7 +10,7 @@
           :onchange="onchange"
           :path="obj.path"
         />
-        {{obj.text}}
+        {{ obj.text }}
       </label>
     </div>
   </div>
