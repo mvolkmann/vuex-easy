@@ -4,6 +4,7 @@
     :checked="checked"
     :type="type"
     :value="getValue"
+    @change="updateValue"
     @input="updateValue"
     @keyup.enter="onenter"
   />
