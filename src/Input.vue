@@ -4,8 +4,7 @@
     :checked="checked"
     :type="type"
     :value="getValue"
-    @change="updateValue"
-    @input="updateValue"
+    v-on="isSafariCheckbox() ? {change: updateValue} : {input: updateValue}"
     @keyup.enter="onenter"
   />
 </template>
@@ -48,6 +47,9 @@ export default {
     }
   },
   methods: {
+    isSafariCheckbox() {
+      return this.type === 'checkbox' && navigator.userAgent.includes('Safari')
+    },
     updateValue(event) {
       const {checked, value} = event.target;
       if (this.type === 'checkbox' && value === this.value) return;
