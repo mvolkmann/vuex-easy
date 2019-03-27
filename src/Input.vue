@@ -50,6 +50,8 @@ export default {
   methods: {
     updateValue(event) {
       const {checked, value} = event.target;
+      if (this.type === 'checkbox' && value === this.value) return;
+
       const {onchange, path, type} = this;
 
       let v = value;

@@ -2,6 +2,8 @@
 
 This library provides the easiest way possible to manage state in a Vue application.
 
+Note: If there is an issue getting tests to run, enter `npx jest --clearCache`.
+
 ## Highlights
 
 - acts as a layer above the VueX library,
