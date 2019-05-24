@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     isSafariCheckbox() {
-      return this.type === 'checkbox' && navigator.userAgent.includes('Safari')
+      return this.type === 'checkbox' && navigator.userAgent.includes('Safari');
     },
     updateValue(event) {
       const {checked, value} = event.target;

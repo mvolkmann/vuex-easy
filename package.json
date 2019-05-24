@@ -1,6 +1,6 @@
 {
   "name": "vuex-easy",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "src/main.js",
   "scripts": {
     "build": "vue-cli-service build",

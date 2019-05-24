@@ -57,51 +57,51 @@ To use vuex-easy:
 
 1. Import vuex-easy in the source file for top-most component (ex. `App.vue`).
 
-```js
-import {createStore} from 'vuex-easy';
-```
+   ```js
+   import {createStore} from 'vuex-easy';
+   ```
 
 1. Define the initial state. For example:
 
-```js
-const initialState = {
-  count: 0,
-  person: {
-    name: 'Mark',
-    occupation: 'software developer'
-  },
-  size: 'medium'
-};
-```
+   ```js
+   const initialState = {
+     count: 0,
+     person: {
+       name: 'Mark',
+       occupation: 'software developer'
+     },
+     size: 'medium'
+   };
+   ```
 
 1. Create the store.
 
-```js
-const store = createStore(initialState);
-```
+   ```js
+   const store = createStore(initialState);
+   ```
 
 1. Register the store.
 
-```js
-export default {
-  name: 'App',
-  components: {...},
-  store
-  // Other instance definition props go here.
-};
-```
+   ```js
+   export default {
+     name: 'App',
+     components: {...},
+     store
+     // Other instance definition props go here.
+   };
+   ```
 
 In components that need to access and/or modify this state:
 
 1. Import the `vxe` object.
 
-```js
-import {vxe} from 'vuex-easy';
-```
+   ```js
+   import {vxe} from 'vuex-easy';
+   ```
 
 1. Access state from the Vuex store using `mapState`.
 
-This part is the same as standard usage of Vuex.
+   This part is the same as standard usage of Vuex.
 
 1. Update state properties at specific paths
    by calling methods on the `vxe` object.\
